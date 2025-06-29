@@ -17,7 +17,7 @@ Content-Type: application/json
 PUT {{AuditDemo_HostAddress}}/users
 Content-Type: application/json
 {
-  "id": 8066,
+  "id": 1,
   "firstName": "Steven",
   "lastName": "Smith",
   "email": "steven.smith@gmail.com"
@@ -33,7 +33,7 @@ Accept: application/json
 
 
 ### Get user audits
-GET {{AuditDemo_HostAddress}}/users/8066/audits
+GET {{AuditDemo_HostAddress}}/users/1/audits
 Accept: application/json
 
 ### Get all tasks
@@ -75,11 +75,11 @@ DELETE {{AuditDemo_HostAddress}}/tasks/1
 Accept: application/json
 
 ### Complete Task
-PATCH {{AuditDemo_HostAddress}}/tasks/2/complete
+PATCH {{AuditDemo_HostAddress}}/tasks/1/complete
 Accept: application/json
 
 ### UnComplete Task
-PATCH {{AuditDemo_HostAddress}}/tasks/2/uncomplete
+PATCH {{AuditDemo_HostAddress}}/tasks/1/uncomplete
 Accept: application/json
 
 ### Asign Task To User
@@ -91,5 +91,5 @@ Content-Type: application/json
 }
 
   ### Get task audits
-GET {{AuditDemo_HostAddress}}/tasks/2/audits
+GET {{AuditDemo_HostAddress}}/tasks/1/audits
 Accept: application/json
