@@ -1,0 +1,95 @@
+@AuditDemo_HostAddress = http://localhost:5000
+
+### Get all users
+GET {{AuditDemo_HostAddress}}/users
+Accept: application/json
+
+### Create an user
+POST {{AuditDemo_HostAddress}}/users
+Content-Type: application/json
+{
+  "firstName": "Jane",
+  "lastName": "Jhonson",
+  "email": "jane.jhonson@gmail.com"
+}
+
+### Update an user
+PUT {{AuditDemo_HostAddress}}/users
+Content-Type: application/json
+{
+  "id": 8066,
+  "firstName": "Steven",
+  "lastName": "Smith",
+  "email": "steven.smith@gmail.com"
+}
+
+### Get an user
+GET {{AuditDemo_HostAddress}}/users/1
+Accept: application/json
+
+### Delete an user
+DELETE {{AuditDemo_HostAddress}}/users/1
+Accept: application/json
+
+
+### Get user audits
+GET {{AuditDemo_HostAddress}}/users/8066/audits
+Accept: application/json
+
+### Get all tasks
+GET {{AuditDemo_HostAddress}}/tasks
+Accept: application/json
+
+### Get one tasks
+GET {{AuditDemo_HostAddress}}/tasks/1
+Accept: application/json
+
+### Get tasks by user
+GET {{AuditDemo_HostAddress}}/tasks/by-user/1
+Accept: application/json
+
+### Create task
+POST {{AuditDemo_HostAddress}}/tasks/
+Content-Type: application/json
+{
+  "title": "First Task",
+	"description": null,
+	"priority": 1,
+	"status": 1
+}
+
+### Update Task
+PUT {{AuditDemo_HostAddress}}/tasks
+Content-Type: application/json
+{
+  "id": 1,
+  "title": "Task",
+	"description": "description",
+	"priority": 1,
+	"status": 1,
+  "userId": null
+}
+
+### Delete Task
+DELETE {{AuditDemo_HostAddress}}/tasks/1
+Accept: application/json
+
+### Complete Task
+PATCH {{AuditDemo_HostAddress}}/tasks/2/complete
+Accept: application/json
+
+### UnComplete Task
+PATCH {{AuditDemo_HostAddress}}/tasks/2/uncomplete
+Accept: application/json
+
+### Asign Task To User
+PATCH {{AuditDemo_HostAddress}}/tasks/assign-user
+Content-Type: application/json
+{
+  "taskId": 1,
+  "userId": 1
+}
+
+  ### Get task audits
+GET {{AuditDemo_HostAddress}}/tasks/2/audits
+Accept: application/json
