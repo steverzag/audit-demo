@@ -45,7 +45,7 @@ Or to run the application using [Aspire](https://learn.microsoft.com/en-us/dotne
 By default, the application will be available at `http://localhost:5000` (or `https://localhost:5001` for HTTPS).
 
 ## Usage
-The application exposes endpoints for creating and updating users and tasks, with all changes automatically tracked and logged for auditing purposes. Each operation generates audit records that capture who made the change, what was changed, and when it occurred. 
+The application exposes endpoints for creating and updating users and tasks, with all changes automatically tracked and logged for auditing purposes.
 
 > Refer to the included [AuditDemo.API.http](AuditDemo.API/AuditDemo.API.http) file for more details.
 
@@ -70,5 +70,28 @@ To enable entity auditing in this project, follow these steps:
 For reference implementations, see [UserAudit.cs](AuditDemo.API/Data/Models/Audit/UserAudit.cs) and [TaskAudit.cs](AuditDemo.API/Data/Models/Audit/TaskAudit.cs). These files demonstrate how to set up auditing for different entities within the solution.
 
 > **Note:** Do not pass the entity to be audited directly to `AuditingEntity<T>`. Doing so will result in an entity configuration exception. Instead, create a separate audit entity that inherits from `AuditingEntity<T>` and configure it accordingly.
+
+> **Tip:**  
+> On other hand, this project implements a basic use of .NET Channels to highlight how auditing operations can be processed in the background. By offloading audit logging to a background job, the application improves user experience and reduces wait times for API requests.
+
+## About Migrations
+
+### Auditing Table Structure
+
+Each auditing table uses the `audit` schema and includes all columns from the corresponding audited entity, plus the following additional fields:
+
+- **AuditId**: Unique identifier for each audit record.
+- **AuditOperation**: Indicates the type of operation (`Create`, `Update`, or `Delete`).
+- **AuditedAt**: Timestamp of when the audit entry was created.
+- **PreviousState**: JSON representation of the entity's state before the change.
+- **EndingState**: JSON representation of the entity's state after the change.
+
+The `PreviousState` and `EndingState` fields are designed to capture the full state of the entity before and after each operation. To ensure these JSON snapshots remain compatible with your C# types—even after schema changes such as column renames, additions, or removals—the project includes a custom [Migration SQL Generator](AuditDemo.API/Migrations/CustomOperations/AppMigrationSqlGenerator.cs). This tool updates the JSON representations during migrations, but may increase migration times for large databases.
+
+> **Note:**  
+> If you do not require this advanced JSON state tracking, you can disable it by removing the related configuration from the `OnConfiguring` method in `AppDbContext`.
+
+
+
 
     
